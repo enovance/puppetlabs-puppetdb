@@ -1,5 +1,6 @@
 # Manage puppet configuration. See README.md for more details.
 class puppetdb::master::config (
+  $masterless                  = $puppetdb::params::masterless,
   $puppetdb_server             = $::fqdn,
   $puppetdb_port               = defined(Class['puppetdb']) ? {
     true    => $::puppetdb::disable_ssl ? {
@@ -67,6 +68,7 @@ class puppetdb::master::config (
   if ($manage_routes) {
     class { 'puppetdb::master::routes':
       puppet_confdir => $puppet_confdir,
+      masterless     => $masterless,
       require        => $strict_validation ? {
         true    => Puppetdb_conn_validator['puppetdb_conn'],
         default => Package[$terminus_package],
@@ -80,6 +82,7 @@ class puppetdb::master::config (
   if ($manage_storeconfigs) {
     class { 'puppetdb::master::storeconfigs':
       puppet_conf => $puppet_conf,
+      masterless  => $masterless,
       require     => $strict_validation ? {
         true    => Puppetdb_conn_validator['puppetdb_conn'],
         default => Package[$terminus_package],
@@ -93,6 +96,7 @@ class puppetdb::master::config (
   if ($manage_report_processor) {
     class { 'puppetdb::master::report_processor':
       puppet_conf => $puppet_conf,
+      masterless  => $masterless,
       enable      => $enable_reports,
       require     => $strict_validation ? {
         true    => Puppetdb_conn_validator['puppetdb_conn'],

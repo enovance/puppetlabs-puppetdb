@@ -492,6 +492,10 @@ Puppet's config directory (defaults to `/etc/puppet`).
 
 Puppet's config file (defaults to `/etc/puppet/puppet.conf`).
 
+####`puppet_conf_section`
+
+Puppet section in config file to edit (defaults to `master`). It can be set to main, for a masterless setup.
+
 ####`puppetdb_version`
 
 The version of the `puppetdb` package that should be installed. You may specify an explicit version number, 'present', or 'latest' (defaults to 'present').
